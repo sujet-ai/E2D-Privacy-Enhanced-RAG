@@ -1,15 +1,23 @@
+# 🦾 Sujet AI / E2D
+
+⚡ Entity Encoder Decoder (E2D): A Privacy-Enhanced Framework for LLMs and RAG Agents ⚡
+
 [![PyPI - PyPi](https://img.shields.io/pypi/v/sujet-ai)](https://pypi.org/project/sujet-ai/)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://sujet.ai)
 
-
-# E2D
- Entity Encoder Decoder: A Privacy-Enhanced Framework for LLMs and RAG Agents
-
 <img src="https://github.com/sujet-ai/E2D-Privacy-Enhanced-RAG/blob/main/diagram.png" alt="drawing" width="500"/>
 
-## Description
+## Quick Install
 
-With the implementation of the AI EU Act, privacy has become a paramount concern in the development and deployment of AI technologies. In response to these heightened privacy requirements, the E2D (Entity Encoder Decoder) framework emerges as a robust solution specifically designed to address these concerns. E2D is a privacy-enhanced framework tailored for Large Language Models (LLMs) and Retrieval-Augmented Generation (RAG) agents, offering a reliable mechanism for managing sensitive information and mitigating privacy risks. By securely encoding and decoding entities, the E2D framework ensures that delicate information is safeguarded during both the training and inference phases of AI model operations. This approach is especially beneficial for closed-source LLMs, providing an additional layer of security to prevent unauthorized access or misuse of sensitive data.
+With pip:
+```bash
+pip install sujet-ai
+python -m spacy download en_core_web_lg # For French, replace "en_core_web_lg" with "fr_core_news_lg"
+```
+ 
+## What is E2D ?
+
+With the implementation of the AI EU Act, privacy has become a paramount concern in the development and deployment of AI technologies. In response to these heightened privacy requirements, the E2D (Entity Encoder Decoder) framework emerges as a robust solution specifically designed to address these concerns. E2D is a privacy-enhanced framework tailored for Large Language Models (LLMs) and Retrieval-Augmented Generation (RAG) agents, offering a reliable mechanism for managing sensitive information and mitigating privacy risks. By using indexed-NER to filter entities, the E2D framework ensures that delicate information is safeguarded during both the training and inference phases of AI model operations. This approach is especially beneficial for closed-source LLMs, providing an additional layer of security to prevent unauthorized access or misuse of sensitive data.
 
 ### Key Features
 
@@ -20,7 +28,7 @@ With the implementation of the AI EU Act, privacy has become a paramount concern
 
 ### Components
 
-1. **Entity Encoder**: This component encodes sensitive entities using advanced cryptographic techniques, ensuring that the original data cannot be easily reconstructed without authorization.
+1. **Entity Encoder**: This component encodes sensitive entities using indexed-NER, ensuring that the original data cannot be easily reconstructed without authorization.
 2. **Entity Decoder**: The decoder component allows for the secure retrieval of the original entities when necessary, ensuring that only authorized users can access the sensitive information.
 3. **Integration Modules**: E2D provides modules for seamless integration with popular LLM frameworks and RAG agents.
 
@@ -31,9 +39,9 @@ Below are examples of how to use the E2D framework with different applications.
 ### Example 1: Process of E2D
 
 ```python
-from E2D import EntityEncoderDecoder
+from sujet_ai import EntityEncoderDecoder
 
-e2d = EntityEncoderDecoder()
+e2d = EntityEncoderDecoder(model="en_core_web_lg") #For French, replace "en_core_web_lg" with "fr_core_news_lg"
 
 text = "Apple Inc. was founded by Steve Jobs and Steve Wozniak on April 1, 1976."
 
@@ -56,7 +64,7 @@ import os
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.llms import OpenAI
-from E2D import EntityEncoderDecoder
+from sujet_ai import EntityEncoderDecoder
 
 # Set the OpenAI API key
 os.environ["OPENAI_API_KEY"] = "Insert Your API Key Here..."
@@ -72,7 +80,7 @@ with open("example.txt", "r") as file:
     context = file.read()
 
 # Create an instance of the EntityEncoderDecoder class
-e2d = EntityEncoderDecoder()
+e2d = EntityEncoderDecoder(model="en_core_web_lg") #For French, replace "en_core_web_lg" with "fr_core_news_lg"
 
 # Encode the entities in the context and question using the EntityEncoderDecoder instance
 encoded_context = e2d.encode_entities(context)
@@ -105,12 +113,12 @@ print("The regular response is: ", response)
 
 ### Bibliography
 
-To cite the E2D framework in your research or project, please use the following BibTeX reference:
+To cite the E2D framework, please use the following BibTeX reference:
 
 ```bibtex
 @software{e2d2024,
   title={Entity Encoder Decoder: A Privacy-Enhanced Framework for LLMs and RAG Agents},
-  author={Sujet AI, Hamed, Allaa, Aleks},
+  author={Sujet AI, Hamed Rahimi},
   year={2024},
   url = {https://github.com/sujet-ai/E2D-Privacy-Enhanced-RAG}
 }
