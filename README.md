@@ -1,6 +1,5 @@
-[![PyPI - PyPi](https://img.shields.io/pypi/v/antm)](https://pypi.org/project/antm/)
-[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://hamedrahimi.fr)
-[![arXiv](https://img.shields.io/badge/arXiv-2302.01501-<COLOR>.svg)](https://arxiv.org/abs/2302.01501)
+[![PyPI - PyPi](https://img.shields.io/pypi/v/sujet-ai)](https://pypi.org/project/sujet-ai/)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://sujet.ai)
 
 
 # E2D
