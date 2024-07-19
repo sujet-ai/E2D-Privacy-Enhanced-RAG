@@ -1,5 +1,5 @@
 # Import the EntityEncoderDecoder class from the E2D module
-from E2D import EntityEncoderDecoder
+from sujet_ai import EntityEncoderDecoder
 
 
 # Define the main function
