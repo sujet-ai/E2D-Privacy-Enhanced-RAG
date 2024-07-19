@@ -3,7 +3,7 @@ import os
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.llms import OpenAI
-from E2D import EntityEncoderDecoder
+from sujet_ai import EntityEncoderDecoder
 
 # Set the OpenAI API key
 os.environ["OPENAI_API_KEY"] = "Insert Your API Key Here..."
