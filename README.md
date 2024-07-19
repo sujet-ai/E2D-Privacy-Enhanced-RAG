@@ -28,40 +28,90 @@ The E2D framework focuses on enhancing the privacy of AI models by encoding and 
 
 Below are examples of how to use the E2D framework with different applications.
 
-### Example 1: Integrating E2D with a Language Model
+### Example 1: Process of E2D
 
 ```python
-from e2d import EntityEncoder, EntityDecoder
+from E2D import EntityEncoderDecoder
 
-# Initialize the encoder and decoder
-encoder = EntityEncoder()
-decoder = EntityDecoder()
+e2d = EntityEncoderDecoder()
 
-# Encode sensitive data before using it with the language model
-sensitive_data = "John's Social Security Number is 123-45-6789"
-encoded_data = encoder.encode(sensitive_data)
+text = "Apple Inc. was founded by Steve Jobs and Steve Wozniak on April 1, 1976."
 
-# Use the encoded data with the language model
-model_input = f"The user's sensitive information is {encoded_data}"
-# model_output = language_model.process(model_input)
+# Encode the entities in the text using E2D
+encoded_text = e2d.encode_entities(text)
 
-# Decode the data when necessary
-decoded_data = decoder.decode(encoded_data)
-print(f"Decoded sensitive information: {decoded_data}")
+print("The encoded text is: ", encoded_text)
+# Output: "ORG_0 was founded by PERSON_0 and PERSON_1 on DATE_0."
 
-Bibliography
+# Decode the entities in the encoded text using E2D
+decoded_text = e2d.decode_entities(encoded_text)
+
+print("The decoded text is: ", decoded_text)
+# Output: "Apple Inc. was founded by Steve Jobs and Steve Wozniak on April 1, 1976."
+```
+
+### Example 2: Integration of E2D with LangChain
+```python
+import os
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
+from langchain.llms import OpenAI
+from E2D import EntityEncoderDecoder
+
+# Set the OpenAI API key
+os.environ["OPENAI_API_KEY"] = "Insert Your API Key Here..."
+
+
+# Define the question to be answered
+question = ("What were the total operating expenses for Universal Holdings Ltd. in 2023 and how did they compare "
+"to the previous year?")
+
+# we assume the context is already retrieved.
+# Open the example text file as a context containing "fake" sensetive information and read its contents
+with open("example.txt", "r") as file:
+    context = file.read()
+
+# Create an instance of the EntityEncoderDecoder class
+e2d = EntityEncoderDecoder()
+
+# Encode the entities in the context and question using the EntityEncoderDecoder instance
+encoded_context = e2d.encode_entities(context)
+encoded_question = e2d.encode_entities(question)
+
+# Define the prompt template to be used by the language model
+prompt = PromptTemplate(
+template="Answer the question using the given context.\nQuestion: {question}\nContext: {context}\nAnswer:",
+          input_variables=["question", "context"])
+
+# Create an instance of the OpenAI language model
+llm = OpenAI()
+
+# Create an instance of the LLMChain class using the language model and prompt template
+chain = LLMChain(llm=llm, prompt=prompt)
+
+# Use the LLMChain instance to generate a response to the encoded question and context
+encoded_response = chain.run({"question": encoded_question, "context": encoded_context})
+
+# Decode the entities in the encoded response using the EntityEncoderDecoder instance
+decoded_response = e2d.decode_entities(encoded_response)
+
+# Use the LLMChain instance to generate a response to the original question and context
+response = chain.run({"question": question, "context": context})
+
+# Print the decoded response and the original response
+print("The E2C response is: ", decoded_response)
+print("The regular response is: ", response)
+```
+
+### Bibliography
 
 To cite the E2D framework in your research or project, please use the following BibTeX reference:
 
-bibtex
-Copy code
-@article{e2d2024,
-  title={E2D: Entity Encoder Decoder for Privacy-Enhanced AI Models},
-  author={John Doe and Jane Smith},
-  journal={Journal of AI Privacy and Security},
+```bibtex
+@software{e2d2024,
+  title={Entity Encoder Decoder: A Privacy-Enhanced Framework for LLMs and RAG Agents},
+  author={Sujet AI, Hamed, Allaa, Aleks},
   year={2024},
-  volume={10},
-  number={2},
-  pages={123-145},
-  publisher={AI Privacy Publications}
+  url = {https://github.com/sujet-ai/E2D-Privacy-Enhanced-RAG}
 }
+```
